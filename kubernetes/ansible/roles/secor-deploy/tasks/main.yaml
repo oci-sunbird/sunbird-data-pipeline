@@ -6,7 +6,7 @@
     dest: "{{ chart_path }}/values.yaml"
     
 - name: helm upgrade
-  shell: helm --debug upgrade --install {{ item }} {{ chart_path }} -n {{ secor_namespace }}
+  shell: helm --debug upgrade --install {{ item }} {{ chart_path }} -n {{ secor_namespace }} -f {{ chart_path }}/values.yaml
   with_items:
     - "{{ job_names_to_deploy.split(',')|list }}"
   tags: secor_deploy

@@ -5,6 +5,11 @@ repository: {{flink_repository|default('sunbird-datapipeline')}}
 image_tag: {{ image_tag }}
 azure_account: {{ azure_account }}
 azure_secret: {{ azure_secret }}
+s3_access_key: {{ s3_storage_key }}
+s3_secret_key: {{ s3_storage_secret }}
+s3_endpoint: {{ s3_storage_endpoint }}
+s3_path_style_access: {{ s3_path_style_access | default("true") }}
+
 serviceMonitor:
   enabled: {{ service_monitor_enabled | lower}}
 replicaCount: {{taskmana_replicacount|default(1)}}
@@ -143,13 +148,12 @@ base_config: |
       statebackend {
         blob {
           storage {
-            account = "{{ azure_account }}.blob.core.windows.net"
+            account = "{{ flink_dp_storage_container }}"
             container = "{{ flink_container_name }}"
             checkpointing.dir = "checkpoint"
           }
         }
-        base.url = "wasbs://"${job.statebackend.blob.storage.container}"@"${job.statebackend.blob.storage.account}"/"${job.statebackend.blob.storage.checkpointing.dir}
-      }
+      base.url = "s3://"${job.statebackend.blob.storage.container}"/"${job.statebackend.blob.storage.checkpointing.dir}      }
     }
     task {
       parallelism = 1
