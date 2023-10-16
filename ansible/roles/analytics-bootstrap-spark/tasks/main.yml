@@ -61,6 +61,7 @@
     - {var: 'STORAGE_PROVIDER', value: 'AZURE'}
     - {var: 'ENV', value: '{{env}}'}
     - {var: 'KAFKA_BROKER_HOST', value: "{{groups['processing-cluster-kafka'][0]}}:9092"}
+    - {var: 'OCI_CLI_AUTH', value: "instance_principal"}
 
 - name: Install required python packages
   become: yes
