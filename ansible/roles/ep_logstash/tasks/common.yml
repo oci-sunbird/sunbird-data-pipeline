@@ -1,6 +1,6 @@
 ---
-- name: checking the list of installed services
-  service_facts:
+# - name: checking the list of installed services
+#   service_facts:
 
 - name: stop monit
   service: 
